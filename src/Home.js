@@ -6,7 +6,7 @@ import mongoPic from './imgs/mongodb.png';
 import nodePic from './imgs/nodejs.png';
 import expressPic from './imgs/express.png'
 import styles from './styles/HomeStyles';
-
+import Button from '@material-ui/core/Button';
 
 
 class Home extends Component {
@@ -24,6 +24,9 @@ class Home extends Component {
             <Avatar className={classes.logoItem} src={reactPic} />
             <Avatar className={classes.logoItem} src={nodePic} />
           </div>
+          <Button variant="contained">
+            View Portfolio
+          </Button>
       </div>
     );
   }

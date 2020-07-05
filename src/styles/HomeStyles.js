@@ -5,11 +5,11 @@ export default {
         alignItems: "center",
         height: "95vh",
         flexDirection: "column",
-        backgroundColor: "#2060AB",
+        backgroundColor: "#0082DC",
         margin: "0"
     },
     header: {
-        color: "white",
+        color: "#d4d2cf",
         fontFamily: " 'Anton', sans-serif ",
         fontSize: "4rem",
         letterSpacing: "1.5px",
@@ -31,3 +31,4 @@ export default {
         }
     }
 }
+
