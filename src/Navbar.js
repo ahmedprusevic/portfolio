@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -21,6 +21,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import BatteryCharging90Icon from '@material-ui/icons/BatteryCharging90';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
+
+
 
 
 const drawerWidth = 260;
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    display: 'flex'
+    display: 'flex',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -78,14 +80,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+    flexGrow: 1
   },
   list: {
       alignItems: "center",
@@ -146,10 +147,13 @@ export default function Navbar() {
         }}
       >
         <div className={classes.toolbar}>
+          <Typography variant="h6">Ahmed Prusevic</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
+      
+        
         <Divider />
         <div className={classes.list}>
         <List>
