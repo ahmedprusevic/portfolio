@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import Projects from "./Projects";
+import Skills from "./Skills";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -145,6 +146,7 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+          <div></div>
           <div className={classes.icons}>
             <Typography>Contact Me</Typography>
             <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
@@ -178,7 +180,7 @@ export default function Navbar() {
         <Divider />
         <List className={classes.list}>
             <ListItem button>
-                <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
+            <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
                 <ListItemText primary={'About Me'}/>
             </ListItem>
             
@@ -207,6 +209,9 @@ export default function Navbar() {
             </Route>
             <Route exact path = "/projects">
                <Projects />
+            </Route>
+            <Route exact path = "/skills">
+               <Skills />
             </Route>
       </Switch>
       </main>

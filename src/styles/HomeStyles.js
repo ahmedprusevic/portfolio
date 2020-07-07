@@ -10,9 +10,9 @@ export default {
     },
     header: {
         color: "#282936",
-        fontFamily: " 'Anton', sans-serif ",
+        fontFamily: " 'Cormorant Garamond', serif ",
         fontSize: "4rem",
-        letterSpacing: "1.5px",
+        letterSpacing: "1px",
         textAlign: "center",
         marginBottom: 0,
         "& p": {
