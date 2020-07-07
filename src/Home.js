@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/styles';
 import reactPic from './imgs/react.png';
 import mongoPic from './imgs/mongodb.png';
 import nodePic from './imgs/nodejs.png';
-import expressPic from './imgs/express.png'
+import expressPic from './imgs/express.png';
+import './styles/button.css'
 import styles from './styles/HomeStyles';
-import Button from '@material-ui/core/Button';
 
 
 class Home extends Component {
@@ -24,9 +24,12 @@ class Home extends Component {
             <Avatar className={classes.logoItem} src={reactPic} />
             <Avatar className={classes.logoItem} src={nodePic} />
           </div>
-          <Button variant="contained">
-            View Portfolio
-          </Button>
+          <button className={`learn-more ${classes.button}`}>
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow"></span>
+            </span>
+            <span className="button-text">View portfolio</span>
+          </button>
       </div>
     );
   }

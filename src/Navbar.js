@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
+import Projects from "./Projects";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -146,10 +147,10 @@ export default function Navbar() {
           </IconButton>
           <div className={classes.icons}>
             <Typography>Contact Me</Typography>
-            <a href="https://github.com/ahmedprusevic" target="_blank" className={classes.icon}><GitHubIcon /></a>
-            <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" className={classes.icon}><LinkedInIcon /></a>
-            <a href="https://www.facebook.com/ljebac/" target="_blank" className={classes.icon}><FacebookIcon /></a>
-            <a href="https://www.facebook.com/ljebac/" target="_blank" className={classes.icon}><EmailIcon /></a>
+            <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
+            <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" rel="noopener noreferrer" className={classes.icon}><LinkedInIcon /></a>
+            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><FacebookIcon /></a>
+            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><EmailIcon /></a>
           </div>
          
         </Toolbar>
@@ -203,6 +204,9 @@ export default function Navbar() {
         <Switch>
             <Route exact path = "/">
                 <Home />
+            </Route>
+            <Route exact path = "/projects">
+               <Projects />
             </Route>
       </Switch>
       </main>
