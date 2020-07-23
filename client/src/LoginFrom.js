@@ -1,0 +1,50 @@
+import React, { Component } from 'react';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import styles from './styles/LoginFormStyles';
+
+
+
+class LoginForm extends Component {
+    render() {
+        const { classes } = this.props;
+
+        return(
+            <main className={classes.main}>
+                <Paper className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography variant="h5">Sign In</Typography>
+                    <form className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <Input id="email" name="email" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input id="password" name="password" autoFocus />
+                        </FormControl>
+                        <Button 
+                        variant="contained" 
+                        type="submit" 
+                        fullWidth 
+                        color="primary" 
+                        className={classes.submit}>
+                            Sign In
+                        </Button>
+                    </form>
+                </Paper>
+            </main>
+        );
+    }
+}
+
+export default withStyles(styles)(LoginForm);

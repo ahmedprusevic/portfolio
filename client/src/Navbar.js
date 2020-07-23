@@ -1,9 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import Home from "./Home";
 import Projects from "./Projects";
 import Skills from "./Skills";
+import LoginForm from "./LoginFrom"
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -113,6 +114,10 @@ const useStyles = makeStyles((theme) => ({
   },
   navIcon: {
       color: "#317BBE"
+  },
+  navLink: {
+     textDecoration: "none",
+     color: "#317BBE"
   }
 }));
 
@@ -184,18 +189,30 @@ export default function Navbar() {
         <Divider />
         <List className={classes.list}>
             <ListItem button>
+            <Link to='/'>
             <ListItemIcon className={classes.navIcon}><AccountCircleIcon /> </ListItemIcon>
-                <ListItemText primary={'About Me'}/>
+            </Link>
+            <Link to="/" className={classes.navLink}>
+              <ListItemText primary={'About Me'}/>
+            </Link>
             </ListItem>
-            
             <ListItem button>
+              <Link to="/projects">
                 <ListItemIcon className={classes.navIcon}><ExtensionIcon /> </ListItemIcon>
+              </Link>
+              <Link to="/projects" className={classes.navLink}>
                 <ListItemText primary={'Projects'}/>
+              </Link>
+              
             </ListItem>
 
             <ListItem button>
+              <Link to="/skills">
                 <ListItemIcon className={classes.navIcon}><BatteryCharging90Icon /> </ListItemIcon>
+              </Link>
+              <Link to="/skills" className={classes.navLink}>
                 <ListItemText primary={'Skills'}/>
+              </Link>
             </ListItem>
 
             <ListItem button>
@@ -208,15 +225,10 @@ export default function Navbar() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-            <Route exact path = "/">
-                <Home />
-            </Route>
-            <Route exact path = "/projects">
-               <Projects />
-            </Route>
-            <Route exact path = "/skills">
-               <Skills />
-            </Route>
+            <Route exact path = "/" component= { Home } />
+            <Route exact path = "/projects" component= { Projects } />
+            <Route exact path = "/skills" component= { Skills } />
+            <Route exact path = "/login" component= { LoginForm } />
       </Switch>
       </main>
     </div>
