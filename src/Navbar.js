@@ -1,7 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
+import Projects from "./Projects";
+import Skills from "./Skills";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -21,13 +23,19 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import BatteryCharging90Icon from '@material-ui/icons/BatteryCharging90';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import EmailIcon from '@material-ui/icons/Email';
+
+
 
 
 const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -55,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    display: 'flex'
+    display: 'flex',
   },
   drawerOpen: {
     width: drawerWidth,
@@ -78,18 +86,29 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+    flexGrow: 1
   },
   list: {
+      height:"100%",
       alignItems: "center",
-      justifyContent:"center"
+      justifyContent:"center",
+      display: "flex",
+      flexDirection: "column"
+  },
+  icons: {
+    width: "100%",
+    display:"flex",
+    justifyContent: "flex-end"
+  },
+  icon: {
+      color:"white",
+      margin: "0 0.5rem"
   }
 }));
 
@@ -127,9 +146,15 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Ahmed Prusevic 
-          </Typography>
+          <div></div>
+          <div className={classes.icons}>
+            <Typography>Contact Me</Typography>
+            <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
+            <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" rel="noopener noreferrer" className={classes.icon}><LinkedInIcon /></a>
+            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><FacebookIcon /></a>
+            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><EmailIcon /></a>
+          </div>
+         
         </Toolbar>
       </AppBar>
       <Drawer
@@ -146,15 +171,16 @@ export default function Navbar() {
         }}
       >
         <div className={classes.toolbar}>
+          <Typography variant="h6">Ahmed Prusevic</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
+      
         <Divider />
-        <div className={classes.list}>
-        <List>
+        <List className={classes.list}>
             <ListItem button>
-                <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
+            <ListItemIcon><AccountCircleIcon /> </ListItemIcon>
                 <ListItemText primary={'About Me'}/>
             </ListItem>
             
@@ -173,7 +199,6 @@ export default function Navbar() {
                 <ListItemText primary={'Resume'}/>
             </ListItem>
         </List>
-        </div>
 
       </Drawer>
       <main className={classes.content}>
@@ -181,6 +206,12 @@ export default function Navbar() {
         <Switch>
             <Route exact path = "/">
                 <Home />
+            </Route>
+            <Route exact path = "/projects">
+               <Projects />
+            </Route>
+            <Route exact path = "/skills">
+               <Skills />
             </Route>
       </Switch>
       </main>
