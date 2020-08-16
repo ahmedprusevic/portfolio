@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-import styles from './styles/SkillsStyles';
+import styles from '../styles/SkillsStyles';
 import { Avatar } from '@material-ui/core';
-import reactPic from './imgs/react.png';
-import HTMLPic from './imgs/html5.png';
-import CSSPic from './imgs/css3.png';
-import Bootstrap from './imgs/bootstrap.png';
-import MaterialPic from './imgs/materialui.png';
-import JavaScriptPic from './imgs/javascript.png';
-import mongoPic from './imgs/mongodb.png';
-import nodePic from './imgs/nodejs.png';
-import expressPic from './imgs/express.png';
-import mongoosePic from './imgs/mongoose.jpg';
-import github from './imgs/github.png';
-import heroku from './imgs/heroku.png';
-import netlify from './imgs/netlify.png'
+import reactPic from '../imgs/react.png';
+import HTMLPic from '../imgs/html5.png';
+import CSSPic from '../imgs/css3.png';
+import Bootstrap from '../imgs/bootstrap.png';
+import MaterialPic from '../imgs/materialui.png';
+import JavaScriptPic from '../imgs/javascript.png';
+import mongoPic from '../imgs/mongodb.png';
+import nodePic from '../imgs/nodejs.png';
+import expressPic from '../imgs/express.png';
+import mongoosePic from '../imgs/mongoose.jpg';
+import github from '../imgs/github.png';
+import heroku from '../imgs/heroku.png';
+import netlify from '../imgs/netlify.png'
 
 
 

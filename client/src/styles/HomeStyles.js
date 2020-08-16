@@ -5,7 +5,7 @@ export default {
         alignItems: "center",
         height: "95vh",
         flexDirection: "column",
-        backgroundColor: "#FFEECA",
+        backgroundColor: "#FAFAFA",
         margin: "0"
     },
     header: {

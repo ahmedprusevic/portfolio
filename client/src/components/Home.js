@@ -1,12 +1,12 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import reactPic from './imgs/react.png';
-import mongoPic from './imgs/mongodb.png';
-import nodePic from './imgs/nodejs.png';
-import expressPic from './imgs/express.png';
-import './styles/button.css'
-import styles from './styles/HomeStyles';
+import reactPic from '../imgs/react.png';
+import mongoPic from '../imgs/mongodb.png';
+import nodePic from '../imgs/nodejs.png';
+import expressPic from '../imgs/express.png';
+import '../styles/button.css'
+import styles from '../styles/HomeStyles';
 
 
 const Home = ({ classes }) => {

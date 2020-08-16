@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import { Switch, Route, Link } from "react-router-dom";
+import PrivateRoute from './Routing/PrivateRoute';
+import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { logout } from '../actions/auth';
 import Home from "./Home";
 import Projects from "./Projects";
 import Skills from "./Skills";
-import LoginForm from "./LoginFrom"
+import LoginForm from "./LoginFrom";
+import AddNewProject from './AddNewProject';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -28,6 +33,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import EmailIcon from '@material-ui/icons/Email';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 
@@ -110,7 +116,10 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
       color:"white",
-      margin: "0 0.5rem"
+      margin: "0 0.5rem",
+      display: "flex",
+      textDecoration: "none",
+      alignItems: "center"
   },
   navIcon: {
       color: "#317BBE"
@@ -121,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Navbar() {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -133,6 +142,24 @@ export default function Navbar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const authLinks = (
+    <div className={classes.icons}>
+          <a href="#" className={classes.icon}> <ExtensionIcon />  Add New Project </a>
+          <a href="#" className={classes.icon}> <BatteryCharging90Icon />  Add New Skill </a>
+          <a onClick={logout} href="/" className={classes.icon}> <ExitToAppIcon /> </a>
+    </div>
+  );
+
+  const guestLinks = (
+          <div className={classes.icons}>
+            <Typography>Contact Me</Typography>
+              <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
+              <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" rel="noopener noreferrer" className={classes.icon}><LinkedInIcon /></a>
+              <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><FacebookIcon /></a>
+              <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><EmailIcon /></a>
+          </div>
+  );
 
   return (
     <div className={classes.root}>
@@ -156,13 +183,7 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <div></div>
-          <div className={classes.icons}>
-            <Typography>Contact Me</Typography>
-            <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
-            <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" rel="noopener noreferrer" className={classes.icon}><LinkedInIcon /></a>
-            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><FacebookIcon /></a>
-            <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><EmailIcon /></a>
-          </div>
+          { !loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>) }
          
         </Toolbar>
       </AppBar>
@@ -229,8 +250,20 @@ export default function Navbar() {
             <Route exact path = "/projects" component= { Projects } />
             <Route exact path = "/skills" component= { Skills } />
             <Route exact path = "/login" component= { LoginForm } />
+            <PrivateRoute exact path = "/addnewproject" component= { AddNewProject } />
       </Switch>
       </main>
     </div>
   );
 }
+
+Navbar.propTypes = {
+  logout: propTypes.func.isRequired,
+  auth: propTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { logout })(Navbar);

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
-import styles from './styles/ProjectsStyles';
+import styles from '../styles/ProjectsStyles';
 import Card from '@material-ui/core/Card';
-import Project1 from "./imgs/project1.gif";
+import Project1 from "../imgs/project1.gif";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
