@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
+import { Link } from 'react-router-dom';
 import reactPic from '../imgs/react.png';
 import mongoPic from '../imgs/mongodb.png';
 import nodePic from '../imgs/nodejs.png';
@@ -22,12 +23,14 @@ const Home = ({ classes }) => {
             <Avatar className={classes.logoItem} src={reactPic} />
             <Avatar className={classes.logoItem} src={nodePic} />
           </div>
+          <Link to="/projects">
           <button className={`learn-more ${classes.button}`}>
             <span className="circle" aria-hidden="true">
               <span className="icon arrow"></span>
             </span>
             <span className="button-text">View portfolio</span>
           </button>
+          </Link>
       </div>
     );
 }

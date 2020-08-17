@@ -35,6 +35,9 @@ class LoginForm extends Component {
 
     async handleSubmit(e){
         e.preventDefault();
+        if(this.state.email === "" || this.state.password === ""){
+            this.props.setAlert("Please fill all the fields");
+        }
         this.props.login(this.state.email, this.state.password);
     }
 
@@ -53,11 +56,11 @@ class LoginForm extends Component {
                     </Avatar>
                     <Typography variant="h5">Sign In</Typography>
                     <form className={classes.form} onSubmit={this.handleSubmit}>
-                        <FormControl margin="normal" required fullWidth>
+                        <FormControl margin="normal"  fullWidth>
                             <InputLabel htmlFor="email">Email</InputLabel>
                             <Input onChange={this.handleChange} value={email} id="email" name="email" autoFocus />
                         </FormControl>
-                        <FormControl margin="normal" required fullWidth>
+                        <FormControl margin="normal" fullWidth>
                             <InputLabel htmlFor="password">Password</InputLabel>
                             <Input onChange={this.handleChange} value={password} id="password" name="password" autoFocus type="password" />
                         </FormControl>

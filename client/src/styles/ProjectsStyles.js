@@ -11,5 +11,8 @@ export default {
     action: {
         display: "flex",
         justifyContent: "space-between"
+    },
+    link: {
+      textDecoration: "none"
     }
 }

@@ -10,6 +10,7 @@ import Projects from "./Projects";
 import Skills from "./Skills";
 import LoginForm from "./LoginFrom";
 import AddNewProject from './AddNewProject';
+import Alert from './Alert';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -119,7 +120,10 @@ const useStyles = makeStyles((theme) => ({
       margin: "0 0.5rem",
       display: "flex",
       textDecoration: "none",
-      alignItems: "center"
+      alignItems: "center",
+      "&:hover": {
+        color: "#cddefa"
+      }
   },
   navIcon: {
       color: "#317BBE"
@@ -145,9 +149,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const authLinks = (
     <div className={classes.icons}>
-          <a href="#" className={classes.icon}> <ExtensionIcon />  Add New Project </a>
-          <a href="#" className={classes.icon}> <BatteryCharging90Icon />  Add New Skill </a>
-          <a onClick={logout} href="/" className={classes.icon}> <ExitToAppIcon /> </a>
+          <Link className={classes.icon} to="/addnewproject"> <ExtensionIcon />  Add New Project </Link>
+          <Link className={classes.icon} to="/addnewskill"> <BatteryCharging90Icon />  Add New Skill </Link>
+          <Link onClick={logout} to="/" className={classes.icon}> <ExitToAppIcon /> </Link>
     </div>
   );
 
@@ -245,6 +249,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Alert />
         <Switch>
             <Route exact path = "/" component= { Home } />
             <Route exact path = "/projects" component= { Projects } />

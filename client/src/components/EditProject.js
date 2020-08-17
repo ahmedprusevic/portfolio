@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createProject } from '../actions/projects';
+import { createProject, getAllProjects } from '../actions/projects';
 import { withRouter } from 'react-router-dom';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
 import styles from '../styles/LoginFormStyles';
 
-class AddNewProject extends Component {
+class EditProject extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -28,10 +28,19 @@ class AddNewProject extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount(){
+        this.props.getAllProjects();
+        this.setState({
+            title: this.props.loading || !projects.title ? '' : projects.title,
+            description: this.props.loading || !projects.description ? '' : projects.description,
+            img: this.props.loading || !projects.img ? '' : projects.img
+        });
+    }
+
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     handleSubmit(e){
@@ -93,4 +102,8 @@ render() {
 }
 };
 
-export default connect(null, { createProject })(withRouter(withStyles(styles)(AddNewProject)));
+const mapStateToProps = state = ({
+    projects: state.projects
+});
+
+export default connect(mapStateToProps, { createProject, getAllProjects })(withRouter(withStyles(styles)(EditProject)));

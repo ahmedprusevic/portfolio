@@ -3,7 +3,6 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 
-const User = require('../../models/User');
 const Project = require('../../models/Project');
 const { route } = require('./user');
 
@@ -56,7 +55,7 @@ async (req, res) => {
 });
 
 // @ route GET api/projects
-// @ desc get all post
+// @ desc get all projects
 // piblic route
 
 router.get('/', async (req, res) => {
