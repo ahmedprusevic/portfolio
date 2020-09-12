@@ -68,25 +68,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @ route GET api/projects/:id
-// @ desc open single project by id
-// piblic route
-
-router.get('/:id', async (req, res) => {
-    try{
-        const project = await Project.findById(req.params.id);
-        if(!project){
-            return res.status(404).json({ msg: 'Project not found' });
-        }
-        res.json(project);
-    } catch(err){
-        console.error(err.message);
-        if(err.kind === 'ObjectId'){
-            return res.status(404).json({ msg: 'Project not found' });
-        }
-        res.status(500).send('Server Error');
-    }
-});
 
 // @ route Delete api/projects/:id
 // @ desc delete single project by id

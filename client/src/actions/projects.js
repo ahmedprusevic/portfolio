@@ -2,10 +2,12 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import {
     GET_PROJECTS,
-    PROJECTS_ERROR
+    PROJECT_ERROR,
+    DELETE_PROJECT
 } from './types';
 
-//Get project
+
+//Get projects
 
 export const getAllProjects = () => async dispatch => {
         try {
@@ -16,16 +18,16 @@ export const getAllProjects = () => async dispatch => {
             });
         } catch(err) {
             dispatch({
-                type: PROJECTS_ERROR,
+                type: PROJECT_ERROR,
                 payload: { msg: err.response.statusText, status: err.response.status }
             });
         }
 }
 
 
-//Create or update project 
+//Create project 
 
-export const createProject = (formData, history, edit = false) => async dispatch => {
+export const createProject = (formData, history) => async dispatch => {
     try{
         const config = {
             headers: {
@@ -34,7 +36,7 @@ export const createProject = (formData, history, edit = false) => async dispatch
         }
         const res = await axios.post('/api/projects', formData, config);
         
-        dispatch(setAlert(edit ? 'Project updated' : 'Project Created'));
+        dispatch(setAlert('Project Created'));
 
         dispatch({
             type: GET_PROJECTS,
@@ -48,9 +50,7 @@ export const createProject = (formData, history, edit = false) => async dispatch
             payload: res2.data
         });
 
-        if(!edit) {
-            history.push("/");
-        }
+        history.push("/");
 
     } catch(err){
         const errors = err.response.data.errors;
@@ -58,8 +58,36 @@ export const createProject = (formData, history, edit = false) => async dispatch
             errors.forEach(error => dispatch(setAlert(error.msg)));
         }
         dispatch({
-            type: PROJECTS_ERROR,
+            type: PROJECT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
     }
 } 
+
+// Delete Project
+
+export const deleteProject = (id) => async dispatch => {
+    try{
+        const res = await axios.delete(`/api/projects/${id}`);
+
+        dispatch ({
+            type: DELETE_PROJECT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Project Removed'));
+
+        const res2 = await axios.get('api/projects');
+
+        dispatch({
+            type: GET_PROJECTS,
+            payload: res2.data
+        });
+
+    }catch(err){
+        dispatch({
+            type: PROJECT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}

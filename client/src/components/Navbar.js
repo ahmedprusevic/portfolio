@@ -10,8 +10,11 @@ import Projects from "./Projects";
 import Skills from "./Skills";
 import LoginForm from "./LoginFrom";
 import AddNewProject from './AddNewProject';
+import AddNewSkill from './AddNewSkill';
+import ContactMe from './ContactMe';
 import Alert from './Alert';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
+import useStyles from '../styles/NavbarStyles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -36,103 +39,6 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import EmailIcon from '@material-ui/icons/Email';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-
-
-
-const drawerWidth = 260;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex'
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: "#317BBE",
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    display: 'flex',
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1
-  },
-  list: {
-      height:"100%",
-      alignItems: "center",
-      justifyContent:"center",
-      display: "flex",
-      flexDirection: "column",
-      color: "#317BBE"
-  },
-  icons: {
-    width: "100%",
-    display:"flex",
-    justifyContent: "flex-end"
-  },
-  icon: {
-      color:"white",
-      margin: "0 0.5rem",
-      display: "flex",
-      textDecoration: "none",
-      alignItems: "center",
-      "&:hover": {
-        color: "#cddefa"
-      }
-  },
-  navIcon: {
-      color: "#317BBE"
-  },
-  navLink: {
-     textDecoration: "none",
-     color: "#317BBE"
-  }
-}));
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const classes = useStyles();
@@ -161,7 +67,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
               <a href="https://github.com/ahmedprusevic" target="_blank" rel="noopener noreferrer" className={classes.icon}><GitHubIcon /></a>
               <a href="https://www.linkedin.com/in/ahmed-prusevic-62578576/" target="_blank" rel="noopener noreferrer" className={classes.icon}><LinkedInIcon /></a>
               <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><FacebookIcon /></a>
-              <a href="https://www.facebook.com/ljebac/" target="_blank" rel="noopener noreferrer" className={classes.icon}><EmailIcon /></a>
+              <Link to="/contactme" className={classes.icon}><EmailIcon /></Link>
           </div>
   );
 
@@ -213,33 +119,24 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       
         <Divider />
         <List className={classes.list}>
-            <ListItem button>
-            <Link to='/'>
-            <ListItemIcon className={classes.navIcon}><AccountCircleIcon /> </ListItemIcon>
+            <Link to="/" className={classes.link}>
+              <ListItem button>
+                <ListItemIcon className={classes.navIcon}><AccountCircleIcon /> </ListItemIcon>
+                <ListItemText primary={'About Me'}/>
+              </ListItem>
             </Link>
-            <Link to="/" className={classes.navLink}>
-              <ListItemText primary={'About Me'}/>
+            <Link to="/projects" className={classes.link}>
+              <ListItem button>
+                  <ListItemIcon className={classes.navIcon}><ExtensionIcon /> </ListItemIcon>
+                  <ListItemText primary={'Projects'}/>
+              </ListItem>
             </Link>
-            </ListItem>
-            <ListItem button>
-              <Link to="/projects">
-                <ListItemIcon className={classes.navIcon}><ExtensionIcon /> </ListItemIcon>
-              </Link>
-              <Link to="/projects" className={classes.navLink}>
-                <ListItemText primary={'Projects'}/>
-              </Link>
-              
-            </ListItem>
-
-            <ListItem button>
-              <Link to="/skills">
-                <ListItemIcon className={classes.navIcon}><BatteryCharging90Icon /> </ListItemIcon>
-              </Link>
-              <Link to="/skills" className={classes.navLink}>
-                <ListItemText primary={'Skills'}/>
-              </Link>
-            </ListItem>
-
+            <Link to="/skills" className={classes.link}>
+              <ListItem button>
+                  <ListItemIcon className={classes.navIcon}><BatteryCharging90Icon /> </ListItemIcon>
+                  <ListItemText primary={'Skills'}/>
+              </ListItem>
+            </Link>
             <ListItem button>
                 <ListItemIcon className={classes.navIcon}><ContactMailIcon /> </ListItemIcon>
                 <ListItemText primary={'Resume'}/>
@@ -255,7 +152,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
             <Route exact path = "/projects" component= { Projects } />
             <Route exact path = "/skills" component= { Skills } />
             <Route exact path = "/login" component= { LoginForm } />
+            <Route exact path = "/contactme" component= { ContactMe } />
             <PrivateRoute exact path = "/addnewproject" component= { AddNewProject } />
+            <PrivateRoute exact path = "/addnewskill" component= { AddNewSkill } />
       </Switch>
       </main>
     </div>

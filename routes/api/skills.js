@@ -14,10 +14,10 @@ router.post('/',[auth, [
     check('title', "Title is required")
     .not()
     .isEmpty(),
-    check('img', "Description is required")
+    check('img', "Image is required")
     .not()
     .isEmpty(),
-    check('type', "Image is required")
+    check('type', "Type is required")
     .not()
     .isEmpty()
 ]
@@ -51,7 +51,7 @@ async (req, res) => {
     
 });
 
-// @ route GET api/projects
+// @ route GET api/skills
 // @ desc get all post
 // piblic route
 
@@ -66,7 +66,7 @@ router.get('/', async (req, res) => {
 });
 
 
-// @ route Delete api/projects/:id
+// @ route Delete api/skills/:id
 // @ desc delete single project by id
 // private
 

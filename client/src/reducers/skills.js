@@ -1,22 +1,22 @@
-import { GET_PROJECTS, PROJECT_ERROR } from "../actions/types";
+import { GET_SKILLS, SKILLS_ERROR } from '../actions/types';
 
 const initialState = {
     loading: true,
     error: {},
-    projects: []
+    skills: []
 }
 
 export default function(state = initialState, action) {
     const { type, payload } = action;
-    
+
     switch(type) {
-        case GET_PROJECTS:
+        case GET_SKILLS:
             return {
                 ...state,
-                projects: payload,
+                skills: payload,
                 loading: false
             };
-        case PROJECT_ERROR:
+        case SKILLS_ERROR:
             return {
                 ...state,
                 error: payload,

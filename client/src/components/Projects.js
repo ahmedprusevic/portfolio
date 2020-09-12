@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllProjects } from '../actions/projects';
+import { getAllProjects, deleteProject } from '../actions/projects';
 import Loading from './Loading';
-import { withStyles } from '@material-ui/styles';
+import withStyles from "@material-ui/core/styles/withStyles";
 import styles from '../styles/ProjectsStyles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,21 +14,25 @@ import Typography from '@material-ui/core/Typography';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
-
-
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 class Projects extends Component {
   
+  constructor(props){
+    super(props);
+    this.state = {
+      openDialog: false
+    }
+  };
+
   componentDidMount(){
     this.props.getAllProjects();
   }
 
   render(){
-    const { classes, projects: { projects, loading }, auth: { isAuthenticated } } = this.props
-    return loading && projects === null ? <Loading /> : <Fragment>
+    const { classes, projects: { projects, loading }, auth: { isAuthenticated }, deleteProject } = this.props
+    return loading ? <Loading /> : <div className={classes.main}>
       {projects.map((project) => {
         return(
         <div className={classes.card} key={project._id}>
@@ -43,7 +47,7 @@ class Projects extends Component {
                   <Typography gutterBottom variant="h5" component="h2">
                     {project.title}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
+                  <Typography className={classes.description} variant="body2" color="textSecondary" component="p">
                     {project.description}
                   </Typography>
                 </CardContent>
@@ -62,21 +66,17 @@ class Projects extends Component {
                 </a>
                 </div>
                 {isAuthenticated && 
-                  <IconButton>
-                    <EditIcon />
-                  </IconButton> }
-                  
-                  <IconButton>
-                    <MoreVertIcon />
+                  <IconButton onClick = {() => deleteProject(project._id)}>
+                    <DeleteIcon />
                   </IconButton>
+                }
             </CardActions>
         </Card>
       </div>
       )})}
-      
-    </Fragment>
+
+    </div>
   }
-  
 }
 
 const mapStateToProps = state => ({
@@ -84,4 +84,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getAllProjects })(withStyles(styles)(Projects));
+export default connect(mapStateToProps, { getAllProjects, deleteProject })(withStyles(styles)(Projects));

@@ -10,7 +10,7 @@ export default {
     },
     header: {
         color: "#282936",
-        fontFamily: " 'Cormorant Garamond', serif ",
+        fontFamily: " 'Russo One', sans-serif ",
         fontSize: "4rem",
         letterSpacing: "1px",
         textAlign: "center",
