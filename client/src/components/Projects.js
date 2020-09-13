@@ -15,6 +15,7 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 
 class Projects extends Component {
@@ -54,11 +55,14 @@ class Projects extends Component {
            </CardActionArea>
             <CardActions className={classes.action}>
                 <div>
-                <a className={classes.link} href={project.gitHub} target="_blank" rel="noopener noreferrer">
+                {project.gitHub === '' ? <Button size="small" endIcon={<VisibilityOffIcon/>}>
+                  Private 
+                  </Button> : 
+                  <a className={classes.link} href={project.gitHub} target="_blank" rel="noopener noreferrer">
                   <Button size="small" endIcon={<GitHubIcon/>}>
                   Code 
                   </Button>
-                </a>
+                </a>}
                 <a className={classes.link} href={project.liveDemo} target="_blank" rel="noopener noreferrer">
                   <Button size="small" endIcon={<LiveTvIcon/>}>
                   Live Demo

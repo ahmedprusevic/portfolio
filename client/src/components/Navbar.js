@@ -137,25 +137,29 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                   <ListItemText primary={'Skills'}/>
               </ListItem>
             </Link>
+            <a href="https://drive.google.com/file/d/1tL37uYi4rzmhXTOsZABV2pecmHDIh7Qr/view?usp=sharing" target="_blank" rel="noopener noreferrer" className={classes.link}>
             <ListItem button>
                 <ListItemIcon className={classes.navIcon}><ContactMailIcon /> </ListItemIcon>
                 <ListItemText primary={'Resume'}/>
             </ListItem>
+            </a>
         </List>
 
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Alert />
-        <Switch>
-            <Route exact path = "/" component= { Home } />
-            <Route exact path = "/projects" component= { Projects } />
-            <Route exact path = "/skills" component= { Skills } />
-            <Route exact path = "/login" component= { LoginForm } />
-            <Route exact path = "/contactme" component= { ContactMe } />
-            <PrivateRoute exact path = "/addnewproject" component= { AddNewProject } />
-            <PrivateRoute exact path = "/addnewskill" component= { AddNewSkill } />
-      </Switch>
+        
+              <Switch>
+                <Route exact path = "/" component= { Home } />
+                <Route exact path = "/projects" component= { Projects } />
+                <Route exact path = "/skills" component= { Skills } />
+                <Route exact path = "/login" component= { LoginForm } />
+                <Route exact path = "/contactme" component= { ContactMe } />
+                <PrivateRoute exact path = "/addnewproject" component= { AddNewProject } />
+                <PrivateRoute exact path = "/addnewskill" component= { AddNewSkill } />
+              </Switch>
+
       </main>
     </div>
   );

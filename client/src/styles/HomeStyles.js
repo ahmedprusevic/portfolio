@@ -19,6 +19,9 @@ export default {
             fontSize: "2rem",
         }
     },
+    p: {
+        fontFamily: " 'Cormorant Garamond', sans-serif "
+    },
     logos: {
         display: "flex"
     },

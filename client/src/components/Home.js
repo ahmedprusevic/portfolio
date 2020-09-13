@@ -14,8 +14,8 @@ const Home = ({ classes }) => {
     return (
       <div className={classes.root}>
         <h1 className={classes.header}>
-          Yo, it's me Ahmed
-          <p>I'm a mission driven full stack web developer. Currently based in Serbia.</p>
+           &lt; Yo, it's Ahmed Prusevic /&gt;
+          <p className={classes.p}>I'm a mission driven full stack web developer. Currently based in Serbia.</p>
         </h1>
           <div className={classes.logos}>
             <Avatar className={classes.logoItem} src={mongoPic} />
