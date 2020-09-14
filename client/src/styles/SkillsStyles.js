@@ -3,10 +3,9 @@ const styles = theme => ({
         fontFamily: " 'Cormorant Garamond', serif "
     },
     top: {
-        height: "25vh",
-        marginBottom: "5rem"
     },
     header: {
+        padding: "0.5rem 0",
         backgroundColor:"black",
         height: "30%",
         display: "flex",
@@ -36,6 +35,7 @@ const styles = theme => ({
         }
     },
     group: {
+        padding:"1rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
