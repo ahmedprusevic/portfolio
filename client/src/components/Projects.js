@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { getAllProjects, deleteProject } from '../actions/projects';
 import Loading from './Loading';
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -17,75 +17,91 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
+const Projects = ({ classes }) => {
 
-class Projects extends Component {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projects);
+  const auth = useSelector((state) => state.auth);
+
   
-  constructor(props){
-    super(props);
-    this.state = {
-      openDialog: false
-    }
-  };
 
-  componentDidMount(){
-    this.props.getAllProjects();
-  }
+  useEffect(() => {
+    dispatch(getAllProjects());
+  }, [dispatch]);
 
-  render(){
-    const { classes, projects: { projects, loading }, auth: { isAuthenticated }, deleteProject } = this.props
-    return loading ? <Loading /> : <div className={classes.main}>
-      {projects.map((project) => {
-        return(
-        <div className={classes.card} key={project._id}>
-        <Card className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image= {project.img}
-              title="Contemplative Reptile"
-            />
+  return projects.loading ? (
+    <Loading />
+  ) : (
+    <div className={classes.main}>
+      {projects.projects.map((project) => {
+        return (
+          <div className={classes.card} key={project._id}>
+            <Card className={classes.root}>
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image={project.img}
+                  title="Contemplative Reptile"
+                />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
                     {project.title}
                   </Typography>
-                  <Typography className={classes.description} variant="body2" color="textSecondary" component="p">
+                  <Typography
+                    className={classes.description}
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
                     {project.description}
                   </Typography>
                 </CardContent>
-           </CardActionArea>
-            <CardActions className={classes.action}>
+              </CardActionArea>
+              <CardActions className={classes.action}>
                 <div>
-                {project.gitHub === '' ? <Button size="small" endIcon={<VisibilityOffIcon/>}>
-                  Private 
-                  </Button> : 
-                  <a className={classes.link} href={project.gitHub} target="_blank" rel="noopener noreferrer">
-                  <Button size="small" endIcon={<GitHubIcon/>}>
-                  Code 
-                  </Button>
-                </a>}
-                <a className={classes.link} href={project.liveDemo} target="_blank" rel="noopener noreferrer">
-                  <Button size="small" endIcon={<LiveTvIcon/>}>
-                  Live Demo
-                  </Button>
-                </a>
+                  {project.gitHub === "" ? (
+                    <Button size="small" endIcon={<VisibilityOffIcon />}>
+                      Private
+                    </Button>
+                  ) : (
+                    <a
+                      className={classes.link}
+                      href={project.gitHub}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button size="small" endIcon={<GitHubIcon />}>
+                        Code
+                      </Button>
+                    </a>
+                  )}
+                  <a
+                    className={classes.link}
+                    href={project.liveDemo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button size="small" endIcon={<LiveTvIcon />}>
+                      Live Demo
+                    </Button>
+                  </a>
                 </div>
-                {isAuthenticated && 
-                  <IconButton onClick = {() => deleteProject(project._id)}>
+                {auth.isAuthenticated && (
+                  <IconButton
+                    onClick={() => dispatch(deleteProject(project._id))}
+                  >
                     <DeleteIcon />
                   </IconButton>
-                }
-            </CardActions>
-        </Card>
-      </div>
-      )})}
-
+                )}
+              </CardActions>
+            </Card>
+          </div>
+        );
+      })}
     </div>
-  }
-}
+  );
+};
 
-const mapStateToProps = state => ({
-  projects: state.projects,
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { getAllProjects, deleteProject })(withStyles(styles)(Projects));
+export default (withStyles(styles)(Projects));

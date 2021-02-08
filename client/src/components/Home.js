@@ -18,7 +18,6 @@ const Home = ({ classes }) => {
           <p className={classes.p}>I'm a mission driven full stack web developer. Currently based in Serbia.</p>
         </h1>
           <div className={classes.logos}>
-            <Avatar className={classes.logoItem} src={mongoPic} />
             <Avatar className={classes.logoItem} src={expressPic} />
             <Avatar className={classes.logoItem} src={reactPic} />
             <Avatar className={classes.logoItem} src={nodePic} />
