@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { getAllProjects, deleteProject } from '../actions/projects';
-import Loading from './Loading';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllProjects, deleteProject } from "../actions/projects";
+import Loading from "./Loading";
 import withStyles from "@material-ui/core/styles/withStyles";
-import styles from '../styles/ProjectsStyles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LiveTvIcon from '@material-ui/icons/LiveTv';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import styles from "../styles/ProjectsStyles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import LiveTvIcon from "@material-ui/icons/LiveTv";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const Projects = ({ classes }) => {
-
   const [openDialog, setOpenDialog] = useState(false);
 
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects);
   const auth = useSelector((state) => state.auth);
-
-  
 
   useEffect(() => {
     dispatch(getAllProjects());
@@ -104,4 +101,4 @@ const Projects = ({ classes }) => {
   );
 };
 
-export default (withStyles(styles)(Projects));
+export default withStyles(styles)(Projects);
