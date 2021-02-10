@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllProjects, deleteProject } from "../actions/projects";
+import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import withStyles from "@material-ui/core/styles/withStyles";
 import styles from "../styles/ProjectsStyles";
@@ -16,6 +17,7 @@ import LiveTvIcon from "@material-ui/icons/LiveTv";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import EditIcon from "@material-ui/icons/Edit";
 
 const Projects = ({ classes }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -86,11 +88,19 @@ const Projects = ({ classes }) => {
                   </a>
                 </div>
                 {auth.isAuthenticated && (
-                  <IconButton
-                    onClick={() => dispatch(deleteProject(project._id))}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  <div>
+                    <Link to={`/projects/${project._id}`}>
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </Link>
+
+                    <IconButton
+                      onClick={() => dispatch(deleteProject(project._id))}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </div>
                 )}
               </CardActions>
             </Card>
