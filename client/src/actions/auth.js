@@ -1,62 +1,68 @@
-import axios from 'axios';
-import { setAlert } from './alert';
-import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
-import setAuthToken from '../utils/setAuthToken';
+import axios from "axios";
+import { setAlert } from "./alert";
+import {
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+} from "./types";
+import setAuthToken from "../utils/setAuthToken";
 
 //Load User
 
-export const loadUser = () => async dispatch => {
-    if(localStorage.token) {
-        setAuthToken(localStorage.token);
-    }
+export const loadUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
 
-    try {
-        const res = await axios.get('/api/auth');
+  try {
+    const res = await axios.get("/api/auth");
 
-        dispatch({
-            type: USER_LOADED,
-            payload: res.data
-        });
-    } catch (err) {
-        dispatch({
-            type: AUTH_ERROR
-        });
-    }
-}
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 //Login User
 
-export const login = (email, password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
+export const login = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
-    const body = JSON.stringify({ email, password });
+  const body = JSON.stringify(formData);
 
-    try {
-        const res = await axios.post('/api/auth', body, config);
+  try {
+    const res = await axios.post("/api/auth", body, config);
 
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data
-        });
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
 
-        dispatch(loadUser());
-    } catch(err){
-        const errors = err.response.data.errors;
-        if(errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-        }
-        dispatch({
-            type: LOGIN_FAIL
-        });
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
 };
 
-// LOGOUT 
+// LOGOUT
 
-export const logout = () => dispatch => {
-    dispatch({ type: LOGOUT })
-}
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
+};
