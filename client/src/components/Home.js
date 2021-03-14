@@ -1,14 +1,15 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
-import { withStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import reactPic from "../imgs/react.png";
 import nodePic from "../imgs/nodejs.png";
-import expressPic from "../imgs/express.png";
+import goPic from "../imgs/go.png";
 import "../styles/button.css";
-import styles from "../styles/HomeStyles";
+import useStyles from "../styles/HomeStyles";
 
-const Home = ({ classes }) => {
+const Home = () => {
+  const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <h1 className={classes.header}>
@@ -19,8 +20,8 @@ const Home = ({ classes }) => {
         </p>
       </h1>
       <div className={classes.logos}>
-        <Avatar className={classes.logoItem} src={expressPic} />
         <Avatar className={classes.logoItem} src={reactPic} />
+        <Avatar className={classes.logoItem} src={goPic} />
         <Avatar className={classes.logoItem} src={nodePic} />
       </div>
       <Link to="/projects">
@@ -35,4 +36,4 @@ const Home = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(Home);
+export default Home;

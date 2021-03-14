@@ -1,29 +1,32 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
 //Redux
 import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
+import { ThemeProvider, useTheme } from "@material-ui/core/styles";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadUser());
-  }
+const App = () => {
+  const theme = useTheme();
 
-  render() {
-    return (
-      <>
-        <Provider store={store}>
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return (
+    <>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
           <Navbar />
-        </Provider>
-      </>
-    );
-  }
-}
+        </ThemeProvider>
+      </Provider>
+    </>
+  );
+};
 
 export default App;

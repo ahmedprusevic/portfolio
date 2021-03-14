@@ -81,16 +81,49 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+// update project
+
+router.put(
+  "/:id",
+  [
+    auth,
+    [
+      check("title", "Title is required").not().isEmpty(),
+      check("description", "Description is required").not().isEmpty(),
+      check("img", "Image is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    try {
+      const { title, description, img, liveDemo, gitHub } = req.body;
+      const project = await Project.findById(req.params.id);
+      if (!project) {
+        return res.status(404).json({ msg: "Project not found" });
+      }
+      project.title = title;
+      project.description = description;
+      project.img = img;
+      project.liveDemo = liveDemo;
+      project.gitHub = gitHub;
+
+      const updatedProject = await project.save();
+      res.json(updatedProject);
+    } catch (err) {
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
 // @ route Delete api/projects/:id
 // @ desc delete single project by id
 // private
 router.delete("/:id", auth, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
-    await project.remove();
     if (!project) {
       return res.status(404).json({ msg: "Project not found" });
     }
+    await project.remove();
     res.json({ msg: "Post removed" });
   } catch (err) {
     console.error(err.message);

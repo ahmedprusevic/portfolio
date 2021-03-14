@@ -5,6 +5,7 @@ import {
   PROJECT_ERROR,
   DELETE_PROJECT,
   GET_PROJECT_ID,
+  UPDATE_PROJECT_ID,
 } from "./types";
 
 //Get projects
@@ -67,6 +68,34 @@ export const createProject = (formData, history) => async (dispatch) => {
     });
 
     history.push("/");
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg)));
+    }
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const updateProject = (formData, id, history) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.put(`/api/projects/${id}`, formData, config);
+
+    dispatch({
+      type: UPDATE_PROJECT_ID,
+      payload: res.data,
+    });
+    dispatch(setAlert("Project Updated"));
+    history.push("/projects");
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

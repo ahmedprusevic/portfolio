@@ -12,3 +12,4 @@ export const GET_SKILLS = "GET_SKILLS";
 export const SKILLS_ERROR = "SKILLS_ERROR";
 export const DELETE_SKILL = "DELETE_SKILL";
 export const GET_PROJECT_ID = "GET_PROJECT_ID";
+export const UPDATE_PROJECT_ID = "UPDATE_PROJECT_ID";

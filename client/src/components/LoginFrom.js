@@ -89,7 +89,6 @@ const LoginForm = ({ classes }) => {
                     fullWidth
                     color="primary"
                     className={classes.submit}
-                    fullWidth
                   >
                     Sign In
                   </Button>

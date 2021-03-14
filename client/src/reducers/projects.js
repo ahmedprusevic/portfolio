@@ -1,4 +1,9 @@
-import { GET_PROJECTS, GET_PROJECT_ID, PROJECT_ERROR } from "../actions/types";
+import {
+  GET_PROJECTS,
+  GET_PROJECT_ID,
+  PROJECT_ERROR,
+  UPDATE_PROJECT_ID,
+} from "../actions/types";
 
 const initialState = {
   loading: true,
@@ -15,9 +20,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         projects: payload,
+        project: null,
         loading: false,
       };
     case GET_PROJECT_ID:
+    case UPDATE_PROJECT_ID:
       return {
         ...state,
         project: payload,

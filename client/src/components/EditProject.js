@@ -1,67 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createProject, getProjectById } from "../actions/projects";
-import { useHistory, useParams } from "react-router-dom";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { createProject, updateProject } from "../actions/projects";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
 import ExtensionIcon from "@material-ui/icons/Extension";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import styles from "../styles/LoginFormStyles";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object({
+  title: Yup.string().required("Title is required"),
+  description: Yup.string().required("Description is required"),
+  img: Yup.string().required("Image is required"),
+});
 
 const EditProject = ({ classes }) => {
-  const [formData, setFromData] = useState({
-    title: "",
-    description: "",
-    img: "",
-    liveDemo: "",
-    gitHub: "",
-  });
-
-  const { title, description, img, liveDemo, gitHub } = formData;
-
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
-  const project = useSelector((state) => state.projects.project);
-
-  const handleChange = (e) => {
-    setFromData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createProject(formData, history));
-  };
-
-  useEffect(() => {
-    dispatch(getProjectById(params.id));
-  }, [dispatch, params.id]);
-
-  useEffect(() => {
-    project !== null &&
-      setFromData({
-        title: project.title,
-        description: project.description,
-        img: project.img,
-        liveDemo: project.liveDemo,
-        gitHub: project.gitHub,
-      });
-
-    params.id === "add" &&
-      setFromData({
-        title: "",
-        description: "",
-        img: "",
-        liveDemo: "",
-        gitHub: "",
-      });
-  }, [project, params.id]);
+  const project = useLocation().state;
 
   return (
     <main className={classes.main}>
@@ -69,72 +31,97 @@ const EditProject = ({ classes }) => {
         <Avatar className={classes.avatar}>
           <ExtensionIcon />
         </Avatar>
-        <Typography variant="h5">
-          {params.id === "add" ? "Add New Project" : "Edit Project"}
-        </Typography>
-        <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="title">Project Title</InputLabel>
-            <Input
-              onChange={(e) => handleChange(e)}
-              value={title || ""}
-              id="title"
-              name="title"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <TextField
-              onChange={(e) => handleChange(e)}
-              id="description"
-              name="description"
-              label="Description"
-              multiline
-              rows={4}
-              value={description || ""}
-              required
-            />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="img">Link For Project Image</InputLabel>
-            <Input
-              onChange={(e) => handleChange(e)}
-              value={img || ""}
-              id="img"
-              name="img"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" fullWidth>
-            <InputLabel htmlFor="liveDemo">Live Demo</InputLabel>
-            <Input
-              onChange={(e) => handleChange(e)}
-              value={liveDemo || ""}
-              id="liveDemo"
-              name="liveDemo"
-              autoFocus
-            />
-          </FormControl>
-          <FormControl margin="normal" fullWidth>
-            <InputLabel htmlFor="gitHub">Github Link</InputLabel>
-            <Input
-              onChange={(e) => handleChange(e)}
-              value={gitHub || ""}
-              id="gitHub"
-              name="gitHub"
-              autoFocus
-            />
-          </FormControl>
-          <Button
-            variant="contained"
-            type="submit"
-            fullWidth
-            color="primary"
-            className={classes.submit}
-          >
-            {params.id === "add" ? "Add Project" : "Save Changes"}
-          </Button>
-        </form>
+        <Formik
+          enableReinitialize
+          initialValues={{
+            title: project ? project.title : "",
+            description: project ? project.description : "",
+            img: project ? project.img : "",
+            liveDemo: project ? project.liveDemo : "",
+            gitHub: project ? project.gitHub : "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => {
+            if (params.id === "add") {
+              dispatch(createProject(values, history));
+            } else {
+              dispatch(updateProject(values, params.id, history));
+            }
+          }}
+        >
+          {(formik) => (
+            <>
+              <Typography variant="h5">
+                {params.id === "add" ? "Add New Project" : "Edit Project"}
+              </Typography>
+              <form className={classes.form} onSubmit={formik.handleSubmit}>
+                <TextField
+                  id="title"
+                  label="Title"
+                  value={formik.values.title}
+                  onChange={formik.handleChange}
+                  autoFocus
+                  error={formik.errors.title || false}
+                  helperText={formik.errors.title}
+                  fullWidth
+                  className={classes.formInput}
+                />
+                <TextField
+                  id="description"
+                  label="Description"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  multiline
+                  rows={4}
+                  error={formik.errors.description || false}
+                  helperText={formik.errors.description}
+                  fullWidth
+                  className={classes.formInput}
+                />
+                <TextField
+                  id="img"
+                  label="Img"
+                  value={formik.values.img}
+                  onChange={formik.handleChange}
+                  error={formik.errors.img || false}
+                  helperText={formik.errors.img}
+                  fullWidth
+                  className={classes.formInput}
+                />
+                <TextField
+                  id="liveDemo"
+                  label="Live Demo"
+                  value={formik.values.liveDemo}
+                  onChange={formik.handleChange}
+                  error={formik.errors.liveDemo}
+                  helperText={formik.errors.liveDemo}
+                  fullWidth
+                  className={classes.formInput}
+                />
+                <TextField
+                  id="gitHub"
+                  label="Github"
+                  value={formik.values.gitHub}
+                  onChange={formik.handleChange}
+                  error={formik.touched.gitHub && formik.errors.gitHub}
+                  helperText={formik.errors.gitHub}
+                  fullWidth
+                  className={classes.formInput}
+                />
+
+                <Button
+                  variant="contained"
+                  type="submit"
+                  fullWidth
+                  color="primary"
+                  className={classes.submit}
+                >
+                  {params.id === "add" ? "Add Project" : "Save Changes"}
+                </Button>
+              </form>
+            </>
+          )}
+        </Formik>
       </Paper>
     </main>
   );

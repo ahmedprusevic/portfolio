@@ -18,13 +18,24 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteDialog from "./DeleteDialog";
 
 const Projects = ({ classes }) => {
   const [openDialog, setOpenDialog] = useState(false);
+  const [id, setId] = useState();
 
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects);
   const auth = useSelector((state) => state.auth);
+
+  const deleteProjectAction = () => {
+    dispatch(deleteProject(id));
+    setOpenDialog(false);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   useEffect(() => {
     dispatch(getAllProjects());
@@ -76,27 +87,37 @@ const Projects = ({ classes }) => {
                       </Button>
                     </a>
                   )}
-                  <a
-                    className={classes.link}
-                    href={project.liveDemo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button size="small" endIcon={<LiveTvIcon />}>
-                      Live Demo
-                    </Button>
-                  </a>
+                  {project.liveDemo && (
+                    <a
+                      className={classes.link}
+                      href={project.liveDemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button size="small" endIcon={<LiveTvIcon />}>
+                        Live Demo
+                      </Button>
+                    </a>
+                  )}
                 </div>
                 {auth.isAuthenticated && (
                   <div>
-                    <Link to={`/projects/${project._id}`}>
+                    <Link
+                      to={{
+                        pathname: `/projects/${project._id}`,
+                        state: project,
+                      }}
+                    >
                       <IconButton>
                         <EditIcon />
                       </IconButton>
                     </Link>
 
                     <IconButton
-                      onClick={() => dispatch(deleteProject(project._id))}
+                      onClick={() => {
+                        setId(project._id);
+                        setOpenDialog(true);
+                      }}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -107,6 +128,13 @@ const Projects = ({ classes }) => {
           </div>
         );
       })}
+      <DeleteDialog
+        open={openDialog}
+        handleClose={handleClose}
+        text="Are you sure that you want to delete this project?"
+        header="Delete Poject"
+        deleteAction={deleteProjectAction}
+      />
     </div>
   );
 };

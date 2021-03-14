@@ -2,15 +2,15 @@ import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading";
 import { getAllSkills, deleteSkill } from "../actions/skills";
-import withStyles from "@material-ui/core/styles/withStyles";
-import styles from "../styles/SkillsStyles";
+import useStyles from "../styles/SkillsStyles";
 import { Avatar } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-const Skills = ({ classes }) => {
+const Skills = () => {
   const dispatch = useDispatch();
   const skills = useSelector((state) => state.skills);
   const auth = useSelector((state) => state.auth);
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch(getAllSkills());
@@ -95,4 +95,4 @@ const Skills = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(Skills);
+export default Skills;
