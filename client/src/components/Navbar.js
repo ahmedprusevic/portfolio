@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import clsx from "clsx";
-import { Switch, Route, Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core";
+import { Switch, Route, Link, NavLink } from "react-router-dom";
 import PrivateRoute from "./Routing/PrivateRoute";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
@@ -13,7 +14,6 @@ import EditProject from "./EditProject";
 import AddNewSkill from "./AddNewSkill";
 import ContactMe from "./ContactMe";
 import Alert from "./Alert";
-import useStyles from "../styles/NavbarStyles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -42,6 +42,7 @@ import { useTheme } from "@material-ui/core";
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const classes = useStyles();
   const theme = useTheme();
+
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -55,16 +56,13 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className={classes.icons}>
       <Link className={classes.icon} to="/projects/add">
-        {" "}
-        <ExtensionIcon /> Add New Project{" "}
+        <ExtensionIcon /> Add New Project
       </Link>
       <Link className={classes.icon} to="/addnewskill">
-        {" "}
-        <BatteryCharging90Icon /> Add New Skill{" "}
+        <BatteryCharging90Icon /> Add New Skill
       </Link>
       <Link onClick={logout} to="/" className={classes.icon}>
-        {" "}
-        <ExitToAppIcon />{" "}
+        <ExitToAppIcon />
       </Link>
     </div>
   );
@@ -155,30 +153,44 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
         <Divider />
         <List className={classes.list}>
-          <Link to="/" className={classes.link}>
+          <NavLink
+            exact
+            to="/"
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
             <ListItem button>
               <ListItemIcon className={classes.navIcon}>
                 <AccountCircleIcon />{" "}
               </ListItemIcon>
               <ListItemText primary={"About Me"} />
             </ListItem>
-          </Link>
-          <Link to="/projects" className={classes.link}>
+          </NavLink>
+          <NavLink
+            to="/projects"
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
             <ListItem button>
               <ListItemIcon className={classes.navIcon}>
                 <ExtensionIcon />{" "}
               </ListItemIcon>
               <ListItemText primary={"Projects"} />
             </ListItem>
-          </Link>
-          <Link to="/skills" className={classes.link}>
+          </NavLink>
+          <NavLink
+            to="/skills"
+            className={classes.link}
+            activeClassName={classes.activeLink}
+          >
             <ListItem button>
               <ListItemIcon className={classes.navIcon}>
                 <BatteryCharging90Icon />{" "}
               </ListItemIcon>
               <ListItemText primary={"Skills"} />
             </ListItem>
-          </Link>
+          </NavLink>
+
           <a
             href="https://drive.google.com/file/d/1tL37uYi4rzmhXTOsZABV2pecmHDIh7Qr/view?usp=sharing"
             target="_blank"
@@ -222,3 +234,106 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: "#317BBE",
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  hide: {
+    display: "none",
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    display: "flex",
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: "hidden",
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(9) + 1,
+    },
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+  },
+  list: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "column",
+    color: "#317BBE",
+  },
+  icons: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  icon: {
+    color: "white",
+    margin: "0 0.5rem",
+    display: "flex",
+    textDecoration: "none",
+    alignItems: "center",
+    "&:hover": {
+      color: "#cddefa",
+    },
+  },
+  navIcon: {
+    color: "#317BBE",
+  },
+  activeLink: {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    borderRight: "3px solid #317BBE",
+  },
+  link: {
+    width: "100%",
+    textDecoration: "none",
+    color: "#317BBE",
+  },
+}));
