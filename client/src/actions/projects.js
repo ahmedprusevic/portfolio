@@ -1,93 +1,136 @@
-import axios from 'axios';
-import { setAlert } from './alert';
+import axios from "axios";
+import { setAlert } from "./alert";
 import {
-    GET_PROJECTS,
-    PROJECT_ERROR,
-    DELETE_PROJECT
-} from './types';
-
+  GET_PROJECTS,
+  PROJECT_ERROR,
+  DELETE_PROJECT,
+  GET_PROJECT_ID,
+  UPDATE_PROJECT_ID,
+} from "./types";
 
 //Get projects
 
-export const getAllProjects = () => async dispatch => {
-        try {
-            const res = await axios.get('api/projects');
-            dispatch({
-                type: GET_PROJECTS,
-                payload: res.data
-            });
-        } catch(err) {
-            dispatch({
-                type: PROJECT_ERROR,
-                payload: { msg: err.response.statusText, status: err.response.status }
-            });
-        }
-}
+export const getAllProjects = () => async (dispatch) => {
+  try {
+    const res = await axios.get("api/projects");
+    dispatch({
+      type: GET_PROJECTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
+export const getProjectById = (id) => async (dispatch) => {
+  try {
+    console.log(id);
+    const res = await axios.get(`/api/projects/${id}`);
 
-//Create project 
+    dispatch({
+      type: GET_PROJECT_ID,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
-export const createProject = (formData, history) => async dispatch => {
-    try{
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        const res = await axios.post('/api/projects', formData, config);
-        
-        dispatch(setAlert('Project Created'));
+//Create project
 
-        dispatch({
-            type: GET_PROJECTS,
-            payload: res.data
-        });
+export const createProject = (formData, history) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post("/api/projects", formData, config);
 
-        const res2 = await axios.get('api/projects');
+    dispatch(setAlert("Project Created"));
 
-        dispatch({
-            type: GET_PROJECTS,
-            payload: res2.data
-        });
+    dispatch({
+      type: GET_PROJECTS,
+      payload: res.data,
+    });
 
-        history.push("/");
+    const response = await axios.get("/api/projects");
 
-    } catch(err){
-        const errors = err.response.data.errors;
-        if(errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg)));
-        }
-        dispatch({
-            type: PROJECT_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
-        });
+    dispatch({
+      type: GET_PROJECTS,
+      payload: response.data,
+    });
+
+    history.push("/");
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg)));
     }
-} 
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const updateProject = (formData, id, history) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.put(`/api/projects/${id}`, formData, config);
+
+    dispatch({
+      type: UPDATE_PROJECT_ID,
+      payload: res.data,
+    });
+    dispatch(setAlert("Project Updated"));
+    history.push("/projects");
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg)));
+    }
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // Delete Project
 
-export const deleteProject = (id) => async dispatch => {
-    try{
-        const res = await axios.delete(`/api/projects/${id}`);
+export const deleteProject = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/projects/${id}`);
 
-        dispatch ({
-            type: DELETE_PROJECT,
-            payload: res.data
-        });
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: res.data,
+    });
 
-        dispatch(setAlert('Project Removed'));
+    dispatch(setAlert("Project Removed"));
 
-        const res2 = await axios.get('api/projects');
+    const response = await axios.get("/api/projects");
 
-        dispatch({
-            type: GET_PROJECTS,
-            payload: res2.data
-        });
-
-    }catch(err){
-        dispatch({
-            type: PROJECT_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status }
-        });
-    }
-}
+    dispatch({
+      type: GET_PROJECTS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
