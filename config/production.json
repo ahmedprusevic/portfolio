@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://Ahmed:galvanometar786@portfolio.kddta.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "jwtSecret": "tajna"
+}
