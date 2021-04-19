@@ -192,7 +192,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           </NavLink>
 
           <a
-            href="https://drive.google.com/file/d/1tL37uYi4rzmhXTOsZABV2pecmHDIh7Qr/view?usp=sharing"
+            href="https://s3.amazonaws.com/attachments.angel.co/5775395-578a4655b93c0c5ce9d13312eee96192.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJS6W3HGZGRJIRBTA%2F20210419%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210419T004408Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f99aaffa84b15c82165cfc344aa7c00131b91ad9dfdcaa9380b8a1e235bff3bc"
             target="_blank"
             rel="noopener noreferrer"
             className={classes.link}
